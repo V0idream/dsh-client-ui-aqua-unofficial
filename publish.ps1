@@ -1,6 +1,7 @@
 # Publish the Aqua plugin to npm as `dsh-client-ui-aqua-unofficial`.
-# Staging rewrites the manifest, adds the profile patch layer
-# (dsh.bundle.patch), and ships the pre-built lib/ bundle.
+# The manifest already carries the final name, the dsh.bundle.patch layer,
+# and the files list; staging only strips devDependencies (workspace links
+# must never ship) and then publishes the pre-built lib/ bundle.
 #
 # Usage:
 #   powershell -ExecutionPolicy Bypass -File .\publish.ps1          # publish
@@ -27,13 +28,8 @@ foreach ($name in 'README.md', 'README.zh.md', 'LICENSE') {
 
 # ---------- 2. manifest ----------
 $json = Get-Content (Join-Path $root 'package.json') -Raw
-$json = $json -replace '"description":\s*"[^"]*"', '"description": "Aqua: a highly customizable glassmorphism theme for the DSH Web UI - blur, frost, fluid or video wallpaper, unified glass, and motion. Unofficial community fork, not affiliated with DeepSeek. Install with: dsh plugin --profile web add dsh-client-ui-aqua-unofficial"'
-# The profile patch layer that activates this package as a plugin bundle.
-$json = $json -replace '"dsh":\s*\{\s*"client"', ('"dsh": {' + "`n" + '    "bundle": { "patch": "./cordis.patch.yml" },' + "`n" + '    "client"')
 # devDependencies are workspace links - never ship them (strip wherever they sit).
 $json = $json -replace ',\s*"devDependencies":\s*\{[^{}]*\}', ''
-# Ship the patch layer with the tarball.
-$json = $json -replace '"lib/types/\*\*/\*\.d\.ts"(\s*)\]', '"lib/types/**/*.d.ts",$1  "cordis.patch.yml"$1]'
 [System.IO.File]::WriteAllText((Join-Path $stage 'package.json'), $json, [System.Text.UTF8Encoding]::new($false))
 
 $name = ([regex]::Match($json, '"name":\s*"([^"]+)"')).Groups[1].Value
@@ -48,6 +44,7 @@ if ($DryRun) {
     return
 }
 Push-Location $stage
+
 try {
     npm publish
     if ($LASTEXITCODE -ne 0) { throw 'npm publish failed' }

@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.1
+
+- npm 发布修复：package.json 内置 dsh.bundle.patch（dsh plugin add 自动注册插件层，无需手动登记 cordis.patch.yml）
+- files 增加 cordis.patch.yml，随包发布；发布时剔除 devDependencies（workspace 链接不再泄漏进 tarball）
+- 新增 Linux 发布脚本 publish.sh（publish.ps1 的 Linux 等价物，支持 --dry-run）；publish.ps1 同步简化
+
 ## v1.4.0
 
 - 兼容 DSH rc.7：settings.plugin.item 卡片槽升级为 keyed 槽（id/order → key），主开关卡片恢复在「插件」设置页展示
