@@ -6,6 +6,8 @@
 - 节点侧新增 aqua 设置命名空间（durable 主开关文档，schema 校验），与浏览器侧卡片同名 key 配对，无需修改 DSH 任何源码
 - peerDependencies 更新至 ^0.1.0-rc.7；新增依赖 @deepseek-ai/dsh-settings@^0.1.0-rc.7、@deepseek-ai/schemastery@^3.18.1
 - 修复仓库地址指向重命名后的 DSH-Transparent-UI-Plugin
+- 非官方重命名：npm 包名改为 dsh-client-ui-aqua-unofficial（脱离 @deepseek-ai 官方 scope），仓库更名为 dsh-client-ui-aqua-unofficial
+- README 增加非官方声明与上游致谢（原项目 WYH66666666/DSH-Transparent-UI-Plugin，MIT (c) John Wu）；install.ps1 / publish.ps1 / cordis.patch.yml / build.ps1 同步更新包名与新仓库地址
 
 ## v1.3.0
 

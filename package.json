@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-client-ui-aqua",
-  "description": "Aqua: a highly customizable glassmorphism theme for the Web surface — adjustable blur, frost, fluid or wallpaper backdrop, unified corners, and motion",
+  "name": "dsh-client-ui-aqua-unofficial",
+  "description": "Aqua: a highly customizable glassmorphism theme for the DeepSeek Harness Web UI — blur, frost, fluid or video wallpaper, unified corners, and motion. Unofficial community fork, not affiliated with DeepSeek.",
   "version": "1.4.0",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WYH66666666/DSH-Transparent-UI-Plugin.git"
+    "url": "git+https://github.com/afrel1024/dsh-client-ui-aqua-unofficial.git"
   },
   "type": "module",
   "main": "lib/index.js",

@@ -1,8 +1,12 @@
-# @deepseek-ai/dsh-client-ui-aqua
+# dsh-client-ui-aqua-unofficial
 
 English | [中文](README.zh.md)
 
-Aqua is a highly customizable glassmorphism theme for the DeepSeek Harness web UI. The header, sidebar, composer, stats line, and trajectory view all become panes of frosted glass. you can put video for wallpaper and Switch it off and the stock UI comes back exactly, with no source changes to DSH itself.
+> **UNOFFICIAL** — This is a **community third-party fork**. It is **not** an official DeepSeek product, is **not affiliated with or endorsed by DeepSeek**, and claims no connection to the `@deepseek-ai` package scope. Use at your own risk.
+>
+> Upstream: [WYH66666666/DSH-Transparent-UI-Plugin](https://github.com/WYH66666666/DSH-Transparent-UI-Plugin) (MIT, (c) 2026 John Wu). This fork adds **DSH rc.7 compatibility** and rebrands the package as unofficial.
+
+Aqua is a highly customizable glassmorphism theme for the DeepSeek Harness web UI. The header, sidebar, composer, stats line, and trajectory view all become panes of frosted glass. You can set an image or video as wallpaper, and switching it off restores the stock UI exactly — with no source changes to DSH itself.
 
 ![](assets/1.png)
 
@@ -22,12 +26,18 @@ Aqua is a highly customizable glassmorphism theme for the DeepSeek Harness web U
 - **Edge fades**: 5px gradient blur bands pinned to the top and bottom of the page, above the chat content — scrolling content melts into the edges; faint white veil on light, faint black on dark
 - One switch: off restores the stock UI exactly, and every effect is removed with the plugin
 
+## What this fork changes
+
+- **DSH rc.7 compatibility (v1.4.0)**: the Plugins-section card slot became a keyed slot; the master-switch card now registers with `key: 'aqua'` and the node half serves the `aqua` settings namespace so the card still appears in Settings → Plugins.
+- **Unofficial rebrand**: package renamed to `dsh-client-ui-aqua-unofficial` (no `@deepseek-ai` scope) and the repository name carries the `-unofficial` suffix.
+- Everything else (theme, settings, wallpapers) is unchanged from upstream v1.3.0.
+
 ## Installation
 
 ### Option 1: npm one-liner (recommended)
 
 ```sh
-dsh plugin --profile web add dsh-client-ui-aqua
+dsh plugin --profile web add dsh-client-ui-aqua-unofficial
 ```
 
 Installs the latest version from npm and registers it as a profile plugin layer (`dsh.bundle` patch) — works on every platform. Reload the web UI and it is on.
@@ -41,7 +51,7 @@ No npm account and no git needed (falls back to a plain zip download).
 **Windows (one command):**
 
 ```powershell
-powershell -ExecutionPolicy Bypass -Command "Invoke-WebRequest 'https://github.com/WYH66666666/DSH-Transparent-UI-Plugin/raw/main/install.ps1' -OutFile install.ps1; .\install.ps1"
+powershell -ExecutionPolicy Bypass -Command "Invoke-WebRequest 'https://github.com/afrel1024/dsh-client-ui-aqua-unofficial/raw/main/install.ps1' -OutFile install.ps1; .\install.ps1"
 ```
 
 Installs the **latest release** by default. The script links the plugin into the profile's `node_modules` and registers `ui-aqua` in `cordis.patch.yml` (idempotent — safe to run again).
@@ -49,15 +59,15 @@ Installs the **latest release** by default. The script links the plugin into the
 Pin a version or track the dev branch:
 
 ```powershell
-.\install.ps1 -Version 'v1.1.0'   # a specific release
+.\install.ps1 -Version 'v1.4.0'   # a specific release
 .\install.ps1 -Version 'main'     # the development branch
 ```
 
 **macOS / Linux (manual, three steps):**
 
 ```sh
-git clone --depth 1 --branch v1.1.0 https://github.com/WYH66666666/DSH-Transparent-UI-Plugin.git
-ln -s "$PWD/DSH" "$DSH_HOME/profiles/node_modules/@deepseek-ai/dsh-client-ui-aqua"
+git clone --depth 1 https://github.com/afrel1024/dsh-client-ui-aqua-unofficial.git
+ln -s "$PWD/dsh-client-ui-aqua-unofficial" "$DSH_HOME/profiles/node_modules/dsh-client-ui-aqua-unofficial"
 ```
 
 then append to `$DSH_HOME/profiles/web/cordis.patch.yml`:
@@ -65,9 +75,13 @@ then append to `$DSH_HOME/profiles/web/cordis.patch.yml`:
 ```yaml
 - insert:
     - id: ui-aqua
-      name: '@deepseek-ai/dsh-client-ui-aqua'
+      name: 'dsh-client-ui-aqua-unofficial'
 ```
 
 ## Usage
 
 Reload the web UI. Aqua is **on by default**; the master switch lives in **Settings → Plugins → Glass theme** (same shape as the other plugin cards), and every other control sits directly under **Settings → General → Appearance** (no title of its own): mode, blur/frost (Mica mode), fluid color, background brightness, backdrop (fluid/wallpaper) with its wallpaper controls, and the particle-whale toggle. With the master switch off, the whole control block under Appearance is hidden.
+
+## License
+
+MIT, inherited from the upstream project ((c) 2026 John Wu). See [LICENSE](LICENSE).

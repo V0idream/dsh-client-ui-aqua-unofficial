@@ -1,12 +1,12 @@
 # Aqua installer (Windows) - BACKUP method. The recommended install is the
 # npm one-liner (no account, no git, no manual steps, all platforms):
 #
-#   dsh plugin --profile web add dsh-client-ui-aqua
+#   dsh plugin --profile web add dsh-client-ui-aqua-unofficial
 #
 # This script is the GitHub fallback: no npm, no git required.
 #
 # One command (from any directory):
-#   powershell -ExecutionPolicy Bypass -Command "Invoke-WebRequest 'https://github.com/WYH66666666/DSH-Transparent-UI-Plugin/raw/main/install.ps1' -OutFile install.ps1; .\install.ps1"
+#   powershell -ExecutionPolicy Bypass -Command "Invoke-WebRequest 'https://github.com/afrel1024/dsh-client-ui-aqua-unofficial/raw/main/install.ps1' -OutFile install.ps1; .\install.ps1"
 #
 # It does three things:
 #   1. get the repo (git clone, or plain zip download when git is missing)
@@ -16,11 +16,12 @@
 # Version: defaults to 'latest' (the newest GitHub Release, resolved via the
 # API). Pin a version with -Version 'v1.0.1', or track the dev branch with
 # -Version 'main'. Reload the Web UI afterwards. DSH home defaults to
-# %USERPROFILE%\.dsh, override with -DshHome. Repo defaults to the official
-# one; pass a URL or local path to install another clone.
+# %USERPROFILE%\.dsh, override with -DshHome. Repo defaults to this fork
+# (afrel1024/dsh-client-ui-aqua-unofficial); pass a URL or local path to install
+# another clone.
 
 param(
-    [string]$Source = 'https://github.com/WYH66666666/DSH-Transparent-UI-Plugin',
+    [string]$Source = 'https://github.com/afrel1024/dsh-client-ui-aqua-unofficial',
     [string]$Version = 'latest',
     [string]$DshHome = $env:DSH_HOME,
     [string]$Profile = 'web'
@@ -32,7 +33,7 @@ $ErrorActionPreference = 'Stop'
 if (-not $DshHome) { $DshHome = Join-Path $env:USERPROFILE '.dsh' }
 if (-not (Test-Path $DshHome)) { throw "DSH home not found: $DshHome (override with -DshHome)" }
 
-$plugin      = '@deepseek-ai/dsh-client-ui-aqua'
+$plugin      = 'dsh-client-ui-aqua-unofficial'
 $nodeModules = Join-Path $DshHome 'profiles\node_modules'
 $linkPath    = Join-Path $nodeModules $plugin
 $patchFile   = Join-Path $DshHome "profiles\$Profile\cordis.patch.yml"
@@ -84,8 +85,8 @@ if ($isRemote) {
         $inner = Get-ChildItem $extractDir -Directory | Select-Object -First 1
         if (-not $inner) { throw "zip contains no package directory: $zipUrl" }
         if (Test-Path $cloneDir) { Remove-Item $cloneDir -Recurse -Force }
-        # The plugin name is scoped (@deepseek-ai/...), so create the parent
-        # level too - Move-Item cannot create multi-level destination paths.
+        # Move-Item cannot create multi-level destination paths, so make sure
+        # the parent level exists first.
         New-Item -ItemType Directory -Force -Path (Split-Path $cloneDir -Parent) | Out-Null
         Move-Item $inner.FullName $cloneDir
         Remove-Item $zipFile -Force
@@ -130,7 +131,7 @@ Write-Host "[3/3] Registering in $patchFile" -ForegroundColor Cyan
 $entryText = @'
 - insert:
     - id: ui-aqua
-      name: '@deepseek-ai/dsh-client-ui-aqua'
+      name: 'dsh-client-ui-aqua-unofficial'
 '@
 if (-not (Test-Path $patchFile)) {
     Set-Content -Path $patchFile -Value ($entryText + "`n") -Encoding UTF8

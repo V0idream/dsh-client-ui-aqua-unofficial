@@ -1,6 +1,5 @@
-# Publish the Aqua plugin to npm as the unscoped distribution package
-# `dsh-client-ui-aqua` (the repo keeps its scoped dev name for the git-based
-# install). Staging rewrites the manifest, adds the profile patch layer
+# Publish the Aqua plugin to npm as `dsh-client-ui-aqua-unofficial`.
+# Staging rewrites the manifest, adds the profile patch layer
 # (dsh.bundle.patch), and ships the pre-built lib/ bundle.
 #
 # Usage:
@@ -28,13 +27,11 @@ foreach ($name in 'README.md', 'README.zh.md', 'LICENSE') {
 
 # ---------- 2. manifest ----------
 $json = Get-Content (Join-Path $root 'package.json') -Raw
-$json = $json -replace '"name":\s*"@deepseek-ai/dsh-client-ui-aqua"', '"name": "dsh-client-ui-aqua"'
-$json = $json -replace '"description":\s*"[^"]*"', '"description": "Aqua: a highly customizable glassmorphism theme for the DSH Web UI - blur, frost, fluid or video wallpaper, unified glass, and motion. Install with: dsh plugin --profile web add dsh-client-ui-aqua"'
-$json = $json -replace '"url":\s*"git\+https://github\.com/WYH66666666/DSH\.git"', '"url": "git+https://github.com/WYH66666666/DSH-Transparent-UI-Plugin.git"'
+$json = $json -replace '"description":\s*"[^"]*"', '"description": "Aqua: a highly customizable glassmorphism theme for the DSH Web UI - blur, frost, fluid or video wallpaper, unified glass, and motion. Unofficial community fork, not affiliated with DeepSeek. Install with: dsh plugin --profile web add dsh-client-ui-aqua-unofficial"'
 # The profile patch layer that activates this package as a plugin bundle.
 $json = $json -replace '"dsh":\s*\{\s*"client"', ('"dsh": {' + "`n" + '    "bundle": { "patch": "./cordis.patch.yml" },' + "`n" + '    "client"')
-# devDependencies are workspace links - never ship them.
-$json = $json -replace '(?s),\s*"devDependencies":\s*\{.*?\}\s*\}$', "`n}"
+# devDependencies are workspace links - never ship them (strip wherever they sit).
+$json = $json -replace ',\s*"devDependencies":\s*\{[^{}]*\}', ''
 # Ship the patch layer with the tarball.
 $json = $json -replace '"lib/types/\*\*/\*\.d\.ts"(\s*)\]', '"lib/types/**/*.d.ts",$1  "cordis.patch.yml"$1]'
 [System.IO.File]::WriteAllText((Join-Path $stage 'package.json'), $json, [System.Text.UTF8Encoding]::new($false))
@@ -59,4 +56,4 @@ try {
 }
 Write-Host ''
 Write-Host 'Done. Install anywhere with:' -ForegroundColor Green
-Write-Host "  dsh plugin --profile web add dsh-client-ui-aqua" -ForegroundColor Cyan
+Write-Host "  dsh plugin --profile web add dsh-client-ui-aqua-unofficial" -ForegroundColor Cyan

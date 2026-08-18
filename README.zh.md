@@ -1,8 +1,12 @@
-# @deepseek-ai/dsh-client-ui-aqua
+# dsh-client-ui-aqua-unofficial
 
 [English](README.md) | 中文
 
-Aqua 是一层高自由度的玻璃质感主题，套在 DeepSeek Harness 网页端。顶栏、侧边栏、输入框、统计行、轨迹视图都成了磨砂玻璃片,你还可以添加视频和图片作为背景。关掉开关就回到原生界面，不改 DSH 任何一行源码。
+> **非官方声明** — 这是**社区第三方分支**，**不是 DeepSeek 官方产品**，与 DeepSeek 及其官方组织**没有任何隶属或背书关系**，也不占用 `@deepseek-ai` npm 命名空间。请自行评估风险后使用。
+>
+> 上游项目：[WYH66666666/DSH-Transparent-UI-Plugin](https://github.com/WYH66666666/DSH-Transparent-UI-Plugin)（MIT，(c) 2026 John Wu）。本分支在其基础上增加了 **DSH rc.7 兼容**，并以「非官方」标识重新发布。
+
+Aqua 是一层高自由度的玻璃质感主题，套在 DeepSeek Harness 网页端。顶栏、侧边栏、输入框、统计行、轨迹视图都成了磨砂玻璃片，还可以添加图片和视频作为背景。关掉开关就回到原生界面，不改 DSH 任何一行源码。
 
 ![](assets/1.png)
 
@@ -22,12 +26,18 @@ Aqua 是一层高自由度的玻璃质感主题，套在 DeepSeek Harness 网页
 - **边缘渐变模糊**：页面顶部/底部各 5px 渐变模糊带，悬浮在聊天内容上层，内容滚到边缘渐入模糊；浅色微泛白、深色微泛黑
 - 一键开关：关闭即完全还原原生界面，所有效果随插件卸载一并消失
 
+## 本分支的改动
+
+- **DSH rc.7 兼容（v1.4.0）**：插件设置页的卡片槽改成了 keyed 槽；主开关卡片改用 `key: 'aqua'` 注册，并由节点侧提供 `aqua` 设置命名空间，使卡片在「设置 → 插件」里照常显示。
+- **非官方重命名**：包名改为 `dsh-client-ui-aqua-unofficial`（不再占用 `@deepseek-ai` 官方 scope），仓库名带 `-unofficial` 后缀。
+- 其余（主题、设置、壁纸等）与上游 v1.3.0 一致。
+
 ## 安装
 
 ### 方式一：npm 一键安装（推荐）
 
 ```sh
-dsh plugin --profile web add dsh-client-ui-aqua
+dsh plugin --profile web add dsh-client-ui-aqua-unofficial
 ```
 
 从 npm 安装最新版，自动注册为 profile 插件层（`dsh.bundle` 补丁），所有平台通用。刷新 Web 界面即可。
@@ -41,7 +51,7 @@ dsh plugin --profile web add dsh-client-ui-aqua
 **Windows（一条命令）：**
 
 ```powershell
-powershell -ExecutionPolicy Bypass -Command "Invoke-WebRequest 'https://github.com/WYH66666666/DSH-Transparent-UI-Plugin/raw/main/install.ps1' -OutFile install.ps1; .\install.ps1"
+powershell -ExecutionPolicy Bypass -Command "Invoke-WebRequest 'https://github.com/afrel1024/dsh-client-ui-aqua-unofficial/raw/main/install.ps1' -OutFile install.ps1; .\install.ps1"
 ```
 
 默认安装**最新发布版**。脚本会把插件链接进 profile 的 `node_modules`，并在 `cordis.patch.yml` 里登记 `ui-aqua`（幂等，重复跑不会重复登记）。
@@ -49,15 +59,15 @@ powershell -ExecutionPolicy Bypass -Command "Invoke-WebRequest 'https://github.c
 指定版本或跟随开发分支：
 
 ```powershell
-.\install.ps1 -Version 'v1.1.0'   # 指定某个发布版
+.\install.ps1 -Version 'v1.4.0'   # 指定某个发布版
 .\install.ps1 -Version 'main'     # 开发分支
 ```
 
 **macOS / Linux（手动，三步）：**
 
 ```sh
-git clone --depth 1 --branch v1.1.0 https://github.com/WYH66666666/DSH-Transparent-UI-Plugin.git
-ln -s "$PWD/DSH" "$DSH_HOME/profiles/node_modules/@deepseek-ai/dsh-client-ui-aqua"
+git clone --depth 1 https://github.com/afrel1024/dsh-client-ui-aqua-unofficial.git
+ln -s "$PWD/dsh-client-ui-aqua-unofficial" "$DSH_HOME/profiles/node_modules/dsh-client-ui-aqua-unofficial"
 ```
 
 然后往 `$DSH_HOME/profiles/web/cordis.patch.yml` 追加：
@@ -65,9 +75,13 @@ ln -s "$PWD/DSH" "$DSH_HOME/profiles/node_modules/@deepseek-ai/dsh-client-ui-aqu
 ```yaml
 - insert:
     - id: ui-aqua
-      name: '@deepseek-ai/dsh-client-ui-aqua'
+      name: 'dsh-client-ui-aqua-unofficial'
 ```
 
 ## 使用
 
 刷新 Web 界面。Aqua **默认开启**；总开关在 **设置 → 插件 → 玻璃主题**（形状与其他插件卡片一致），其余全部调节在 **设置 → 通用设置 → 外观** 的正下方（无独立标题）：模式、模糊度/磨砂度（云母模式）、流体颜色、背景亮度、背景（流体/壁纸）、壁纸设置，以及粒子鲸鱼开关。总开关关闭时，外观下方的整块调节自动隐藏。
+
+## 开源协议
+
+MIT，继承自上游项目（(c) 2026 John Wu）。详见 [LICENSE](LICENSE)。
