@@ -170,11 +170,13 @@ export function apply(ctx: ClientContext): void {
     }
   }
 
-  // Master switch card in the Plugins configurable tab.
+  // Master switch card in the Plugins configurable tab. rc.7 turned
+  // 'settings.plugin.item' into a keyed slot dispatched by the settings
+  // namespace a card edits, so the key must equal the 'aqua' settings
+  // namespace the node half registers (see src/index.ts).
   ctx.slots.inject('settings.plugin.item', () => ctx.slots.register({
     name: 'settings.plugin.item',
-    id: 'aqua',
-    order: 5,
+    key: 'aqua',
     store: pluginStore,
     locale: NS,
     inject: pluginInjected,

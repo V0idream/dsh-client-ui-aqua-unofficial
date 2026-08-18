@@ -32,6 +32,8 @@ dsh plugin --profile web add dsh-client-ui-aqua
 
 Installs the latest version from npm and registers it as a profile plugin layer (`dsh.bundle` patch) — works on every platform. Reload the web UI and it is on.
 
+> **DSH rc.7**: v1.4.0+ targets `@deepseek-ai/dsh-*` rc.7 (the Plugins-section card slot became a keyed slot). Earlier versions still run on rc.5/rc.6.
+
 ### Option 2: GitHub installer (fallback)
 
 No npm account and no git needed (falls back to a plain zip download).

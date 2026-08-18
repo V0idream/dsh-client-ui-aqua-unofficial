@@ -32,6 +32,8 @@ dsh plugin --profile web add dsh-client-ui-aqua
 
 从 npm 安装最新版，自动注册为 profile 插件层（`dsh.bundle` 补丁），所有平台通用。刷新 Web 界面即可。
 
+> **DSH rc.7**：v1.4.0+ 面向 `@deepseek-ai/dsh-*` rc.7（插件设置页的卡片槽已改为 keyed 槽）。更早的版本仍可运行在 rc.5/rc.6 上。
+
 ### 方式二：GitHub 安装器（备用）
 
 不需要 npm、不需要 git（自动退回 zip 下载）。
